@@ -16,17 +16,19 @@
             <h3>Список дел</h3>
             <input class="input" type="text" placeholder="Напиши что-нибудь" maxlength="150">
 
-            <div class="priority">
-                <form action="">
-                    <input type="radio" value="hight" name="contact" id="priority-item-1">
+            <div class="priority" id="priority">
+
+                    Выберете приоритет задачи:
+                
+                    <input id="priority-item-1" class="priority-item" type="radio" value="1" name="contact">
                     <label for="priority-item-1">Высокий</label>
 
-                    <input type="radio" value="medium" name="contact" id="priority-item-2">
+                    <input id="priority-item-2" class="priority-item" type="radio" value="0" name="contact" checked="checked">
                     <label for="priority-item-2">Средний</label>
 
-                    <input type="radio" value="low" name="contact" id="priority-item-3">
+                    <input id="priority-item-3" class="priority-item" type="radio" value="-1" name="contact">
                     <label for="priority-item-3">Низкий</label>
-                </form>
+                
             </div>
 
             <button class="btn add-task">Добавить задание</button>
@@ -37,37 +39,45 @@
                 <div class="tasks__title">Созданные задания</div>
                 <div class="tasks__filtr">
                     Сортировать по: 
-                    <select name="" id="">
-                        <option value="1">По дате добавления</option>
-                        <option value="2">По приоритету</option>
+                    <select name="" id="sortSelect">
+                        <option>Выберите</option>
+                        <option value="dateNew">По дате: от новых к старым</option>
+                        <option value="dateOld">По дате: от старых к новым</option>
+                        <option value="priorityLow">По приоритету: от меньшего к большему</option>
+                        <option value="priorityHight">По приоритету: от большего к меньшему</option>
                     </select>
                 </div>
 
-                <div class="task">
-                    <div class="task__content">
-                        <input type="checkbox" class="checkbox">
-                        <div class="task__text">
-                            Text task Text task Text task Text task
+                <div class="task-conteiner">
+
+                    <!-- <div class="task">
+                        <div class="task__content">
+                            <input type="checkbox" class="checkbox">
+                            <div class="task__text">
+                                Text task Text task Text task Text task
+                            </div>
+                            <div class="task__prioritet">
+                                <img src="img/hight-priority.png" alt="">
+                            </div>
+                            <div class="task__delite-icon">
+                                <img src="img/delete-icon.png" alt="">
+                            </div>
                         </div>
-                        <div class="task__prioritet">
-                            <img src="img/hight-priority.png" alt="">
+                         <div class="task__date">
+                            22:45 14.04.2020
                         </div>
-                        <div class="task__delite-icon">
-                            <img src="img/delete-icon.png" alt="">
-                        </div>
-                    </div>
-                     <div class="task__data">
-                        14.04.2020
-                    </div>
+                    </div> -->
+                    
                 </div>
 
+                
             </div>
 
         </div>
 
     </div>
 
-    <!-- <script src="js/index.js"></script> -->
+    <script src="js/index.js"></script>
 
 </body>
 

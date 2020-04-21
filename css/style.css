@@ -15,7 +15,16 @@ h3 {
 }
 
 .priority {
+    display: none;
     margin: 15px 0;
+    font-family: cursive;
+    font-size: 13px;
+    font-weight: normal;
+    color: #464646;
+}
+
+.priority--active {
+    display: block;
 }
 
 hr {
@@ -40,6 +49,7 @@ li {
     background-color: #df5e5e;
     font-family: cursive;
     color: white;
+    margin-top: 15px;
 }
 
 .add-task:hover {
@@ -53,6 +63,11 @@ li {
     border: none;
     border-radius: 3px;
     padding: 20px;
+    transition: .3s;
+}
+
+.input--warning {
+    box-shadow: #e31b37 0px 0px 7px;
 }
 
 label {
@@ -110,9 +125,13 @@ label {
     color: #464646;
 }
 
+.task__text-checked {
+    color: #e31b37 !important;
+    text-shadow: #e31b37 0px 0px 15px;
+}
+
 .task__prioritet, .task__delite-icon {
     width: 5%;
-    /* text-align: center; */
     display: flex;
     justify-content: end;
     align-items: end;
@@ -123,7 +142,7 @@ label {
     width: 85%;
 }
 
-.task__data {
+.task__date {
     margin-top: 10px;
     font-family: cursive;
     font-size: 13px;
