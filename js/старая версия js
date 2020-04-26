@@ -1,13 +1,13 @@
-var LOCAL_STORAGE_KEY = 'tasks';
+var LOCAL_STORAGE_KEY = 'task';
 
 var $createTaskButton = document.querySelector('.btn');
 var $taskTextInput = document.querySelector('.input');
 var $priorityBlock = document.querySelector('#priority');
-var $priorityItem = document.querySelectorAll('.priority_tem');
+var $priorityItem = document.querySelectorAll('.priority-item');
 var $sortSelect = document.querySelector('#sortSelect');
 var $checkbox = document.querySelectorAll('.checkbox');
 
-var state = getFromLocalStorage() || {};
+var arr = getFromLocalStorage() || [];
 
 function generateId() {
     return new Date().getTime() + '_' + Math.round(Math.random() * 1000);
@@ -44,8 +44,8 @@ function getInputValues() {
     };
 }
 
-function saveToLocalStorage(state) {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+function saveToLocalStorage(arr) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(arr));
 }
 
 function getFromLocalStorage() {
@@ -68,23 +68,35 @@ function addTask(text, date, priority, id, inputIsCheked) {
 
     var checkbox = document.createElement('input');
     checkbox.classList.add('checkbox');
+
     checkbox.checked = inputIsCheked;
     checkbox.type = 'checkbox';
+
     if (inputIsCheked) taskText.classList.add('task__text-checked');
+
     checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-            taskText.classList.add('task__text-checked');
-        } else {
-            taskText.classList.remove('task__text-checked');
-        }
-        state[id].inputIsCheked = checkbox.checked;
-        saveToLocalStorage(state);
+        arr.some(function(currentValue) {
+            console.log(currentValue);
+            if (currentValue.id === id) {
+                if (checkbox.checked) {
+                    taskText.classList.add('task__text-checked');
+                    currentValue.inputIsCheked = true;
+                } else {
+                    taskText.classList.remove('task__text-checked');
+                    currentValue.inputIsCheked = false;
+                }
+                return true;
+            }
+        });
+
+        saveToLocalStorage(arr);
     });
 
     var taskPrioritet = document.createElement('div');
     taskPrioritet.classList.add('task__prioritet');
     var taskPrioritetImg = document.createElement('img');
     taskPrioritet.append(taskPrioritetImg);
+
     if (priority == '1') {
         taskPrioritetImg.src = 'img/hight-priority.png';
     } else if (priority == '0') {
@@ -95,14 +107,19 @@ function addTask(text, date, priority, id, inputIsCheked) {
     
     var taskDeleteIcon = document.createElement('div');
     taskDeleteIcon.classList.add('task__delite-icon');
+
     var taskDeleteIconImg = document.createElement('img');
     taskDeleteIconImg.classList.add('task__delite-icon');
     taskDeleteIconImg.src = 'img/delete-icon.png';
     taskDeleteIcon.append(taskDeleteIconImg);
+
     taskDeleteIcon.addEventListener('click', function() {
         task.parentNode.removeChild(task);
-        delete state[id];
-        saveToLocalStorage(state);
+        arr = arr.filter(function(item) {
+            return item.id !== id;
+        });
+
+        saveToLocalStorage(arr);
     });
 
     var taskDate = document.createElement('div');
@@ -111,16 +128,19 @@ function addTask(text, date, priority, id, inputIsCheked) {
 
     task.appendChild(taskContent);
     task.appendChild(taskDate);
+
     taskContent.append(checkbox);
     taskContent.append(taskText);
     taskContent.append(taskPrioritet);
     taskContent.append(taskDeleteIcon);
+
     taskConteiner.prepend(task);
+
 }
 
 $taskTextInput.addEventListener('focus', function() {
     $priorityBlock.classList.add('priority--active');
-});
+})
 
 $createTaskButton.addEventListener('click', function() {
     if ($taskTextInput.value == '') {
@@ -128,66 +148,56 @@ $createTaskButton.addEventListener('click', function() {
     } else {
         $taskTextInput.classList.remove('input--warning');
         var values = getInputValues();
-        state[values.id] = values;
+        arr.push(values);
         addTask(values.text, values.date, values.priority, values.id, values.inputIsCheked);
-        saveToLocalStorage(state);
+        saveToLocalStorage(arr);
         $taskTextInput.value = '';
     }
-});
+})
 
-function addTasks(tasks) {
-    if (tasks) {
-        Object.keys(tasks).forEach(function(taskId) {
-            var task = tasks[taskId];
+function addTasks(arr) {
+    if (Array.isArray(arr)) {
+        arr.forEach(function(task) {
             addTask(task.text, task.date, task.priority, task.id, task.inputIsCheked);
         });
     } 
 }
 
-function updateTaskConteiner(state) {
+function updateTaskConteiner(arr) {
     var taskConteiner = document.querySelector('.task-conteiner');
-    saveToLocalStorage(state);
+    saveToLocalStorage(arr);
     taskConteiner.innerHTML = '';
-    addTasks(state);
-}
-
-function sortObject(obj, callback) {
-    return Object.keys(obj).sort(function(a, b) {
-        return callback(obj[a], obj[b]);
-    }).reduce(function(acc, key) {
-        acc[key] = state[key];
-        return acc; 
-    }, {});
+    addTasks(arr);
 }
 
 $sortSelect.addEventListener('change', function() {
     if ($sortSelect.value === 'priorityHight') {
-        state = sortObject(state, function(a, b) {
+        arr = arr.sort(function(a, b) {
             return b.priority - a.priority;
         });
-        updateTaskConteiner(state);
+        updateTaskConteiner(arr);
         
     } else if ($sortSelect.value === 'priorityLow') { 
-        state = sortObject(state, function(a, b) {
+        arr = arr.sort(function(a, b) {
             return a.priority - b.priority;
         });
-        updateTaskConteiner(state);
+        updateTaskConteiner(arr);
 
     } else if ($sortSelect.value === 'dateNew') { 
-        state = sortObject(state, function(a, b) {
+        arr = arr.sort(function(a, b) {
             return a.date - b.date;
         });
-        updateTaskConteiner(state);
+        updateTaskConteiner(arr);
 
     } else if ($sortSelect.value === 'dateOld') { 
-        state = sortObject(state, function(a, b) {
-            return b.date - a.date;
+        arr = arr.sort(function(a, b) {
+            return  b.date - a.date;
         });
-        updateTaskConteiner(state);
+        updateTaskConteiner(arr);
     }
-});
+})
 
-addTasks(state);
+addTasks(arr);
 
 
 

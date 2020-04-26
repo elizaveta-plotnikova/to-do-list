@@ -1,18 +1,20 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #555555;
+    background-color: #fbedf9;
 }
 
 h3 {
     text-align: center;
-    color: #464646;
+    color: #ffffff;
     margin-top: 0;
     margin-bottom: 30px;
     font-family: cursive;
     font-size: 18px;
     font-weight: normal;
 }
+
+
 
 .priority {
     display: none;
@@ -46,14 +48,15 @@ li {
     height: 40px;
     border: none;
     border-radius: 3px;
-    background-color: #df5e5e;
+    background-color: #f3c131;
     font-family: cursive;
     color: white;
     margin-top: 15px;
 }
 
 .add-task:hover {
-    background-color: #c25151;
+    background-color: #d9ac2d;
+    cursor: pointer;
 }
 
 .input {
@@ -82,7 +85,7 @@ label {
     padding: 30px;
     border-radius: 5px;
     margin-top: 100px;
-    background: linear-gradient(45deg, #f6ecd3, #ffd487);
+    background: linear-gradient(45deg, #948fd7, #d698f6);
 }
 
 .tasks {
@@ -95,7 +98,7 @@ label {
 
 .tasks__title {
     text-align: center;
-    color: #464646;
+    color: #ffffff;
     margin-top: 0;
     margin-bottom: 30px;
     font-family: cursive;
@@ -115,6 +118,7 @@ label {
 
 .checkbox {
     margin: 6px 5px 0 0;
+    cursor: pointer;
 }
 
 .task__text {
@@ -122,12 +126,12 @@ label {
     word-break: break-word;
     margin-right: 5%;
     font-family: cursive;
-    color: #464646;
+    color: #ffffff;
 }
 
 .task__text-checked {
-    color: #e31b37 !important;
-    text-shadow: #e31b37 0px 0px 15px;
+    color: #ffbf07 !important;
+    text-shadow: #ffffff 0px 0px 20px;
 }
 
 .task__prioritet, .task__delite-icon {
@@ -140,11 +144,12 @@ label {
 
 .task__prioritet img, .task__delite-icon img {
     width: 85%;
+    cursor: pointer;
 }
 
 .task__date {
     margin-top: 10px;
     font-family: cursive;
     font-size: 13px;
-    color: #cfbe9d;
+    color: #464646;
 }
